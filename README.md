@@ -14,4 +14,16 @@ Example continued. ID - 101 writes at periods 1s, 2s, 5s, 15s with a 10s buffer 
 ## Logic
 - You write an ID with the amount of time you are willing to wait in seconds
 - writefile.lua checks if the cache map already has an entry for that ID. If so, it no-ops; otherwise, add to the cache with a timestamp in the future. Also add and ID reference to a queue.
-- On a polling strategy, readfile.lua when called will look at the head of the queue and see if the time duration has transpired. If so, it will digest the queue until the max return is met or the time duration logic fails. It then deletes from the cache map and will allow for
+- On a polling strategy, readfile.lua when called will look at the head of the queue and see if the time duration has transpired. If so, it will digest the queue until the max return is met or the time duration logic fails. It then deletes from the cache map and will allow for more writes for that ID.
+
+
+## Development
+Command line query examples:
+
+`redis-cli --eval writefile.lua buffermap bufferlist , 2224 60`
+
+`redis-cli --eval readfile.lua buffermap bufferlist , 3`
+
+With debugging flag:
+
+`redis-cli --ldb --eval readfile.lua buffermap bufferlist , 10`
