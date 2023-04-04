@@ -4,6 +4,13 @@ import time
 
 
 
+"""
+
+Test and example cases of the usage of this system
+
+"""
+
+
 
 def sleep_and_log(t):
     print("sleeping for {}s".format(t))
@@ -26,8 +33,6 @@ class RedisLoader:
 
 
 
-
-
 r = redis.Redis(host='localhost', port=6379, db=0, charset="utf-8", decode_responses=True)
 
 write_loader = RedisLoader()
@@ -40,15 +45,15 @@ read_loader.load_script(r, 'readfile.lua')
 Test 1 to see if overlapping makes sense
 """
 
-print("Test 1")
+print("Test 1 to see if overlapping makes sense")
 
-write_loader.get_script_instance()(keys=['buffermap', 'bufferlist'], args=[11111, 0])
-write_loader.get_script_instance()(keys=['buffermap', 'bufferlist'], args=[11111, 5])
-write_loader.get_script_instance()(keys=['buffermap', 'bufferlist'], args=[11111, 6])
-write_loader.get_script_instance()(keys=['buffermap', 'bufferlist'], args=[22222, 0])
+print(write_loader.get_script_instance()(keys=['buffermap', 'bufferlist'], args=[11111, 0]))
+print(write_loader.get_script_instance()(keys=['buffermap', 'bufferlist'], args=[11111, 5]))
+print(write_loader.get_script_instance()(keys=['buffermap', 'bufferlist'], args=[11111, 6]))
+print(write_loader.get_script_instance()(keys=['buffermap', 'bufferlist'], args=[22222, 0]))
 
-write_loader.get_script_instance()(keys=['buffermap', 'bufferlist'], args=[33333, 6])
-write_loader.get_script_instance()(keys=['buffermap', 'bufferlist'], args=[33333, 7])
+print(write_loader.get_script_instance()(keys=['buffermap', 'bufferlist'], args=[33333, 6]))
+print(write_loader.get_script_instance()(keys=['buffermap', 'bufferlist'], args=[33333, 7]))
 
 sleep_and_log(2)
 
@@ -72,13 +77,13 @@ assert second_vals[0] == '33333'
 Test 2 to see if the get parameter will return the correct max amount
 """
 
-print("Test 2")
+print("Test 2 to see if the get parameter will return the correct max amount")
 
-write_loader.get_script_instance()(keys=['buffermap', 'bufferlist'], args=[11111, 0])
-write_loader.get_script_instance()(keys=['buffermap', 'bufferlist'], args=[22222, 0])
-write_loader.get_script_instance()(keys=['buffermap', 'bufferlist'], args=[33333, 0])
-write_loader.get_script_instance()(keys=['buffermap', 'bufferlist'], args=[44444, 0])
-write_loader.get_script_instance()(keys=['buffermap', 'bufferlist'], args=[55555, 0])
+print(write_loader.get_script_instance()(keys=['buffermap', 'bufferlist'], args=[11111, 0]))
+print(write_loader.get_script_instance()(keys=['buffermap', 'bufferlist'], args=[22222, 0]))
+print(write_loader.get_script_instance()(keys=['buffermap', 'bufferlist'], args=[33333, 0]))
+print(write_loader.get_script_instance()(keys=['buffermap', 'bufferlist'], args=[44444, 0]))
+print(write_loader.get_script_instance()(keys=['buffermap', 'bufferlist'], args=[55555, 0]))
 
 vals = read_loader.get_script_instance()(keys=['buffermap', 'bufferlist'], args=[3])
 print(vals)
